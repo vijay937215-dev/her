@@ -3,44 +3,33 @@ const supabaseUrl = 'https://cnhprpdqrbpqilxtkurf.supabase.co';
 const supabaseKey = 'sb_publishable_URKmPy7y6OtNvIwXTHz6TQ_2s6PG0YA';
 const isPlaceholder = supabaseUrl === 'YOUR_SUPABASE_URL';
 const supabase = (window.supabase && !isPlaceholder) ? window.supabase.createClient(supabaseUrl, supabaseKey) : null;
+const ADMIN_PASSWORD = 'admin123'; // Change this to your preferred password.
 let allData = [];
 
 const loginSection = document.getElementById('loginSection');
 const dashboardSection = document.getElementById('dashboardSection');
 
-async function initAdmin() {
-    if (isPlaceholder) {
-        dashboardSection.classList.remove('hidden');
-        loadDummyData();
-    } else {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session) {
-            dashboardSection.classList.remove('hidden');
-            fetchData();
-        } else {
-            loginSection.classList.remove('hidden');
-        }
-    }
-}
-initAdmin();
+loginSection.classList.remove('hidden');
 
-document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
+document.getElementById('loginForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
-    const email = document.getElementById('adminEmail').value;
     const password = document.getElementById('adminPassword').value;
 
-    if (!isPlaceholder) {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) { alert(error.message); return; }
-        loginSection.classList.add('hidden');
-        dashboardSection.classList.remove('hidden');
-        fetchData();
+    if (password !== ADMIN_PASSWORD) {
+        alert('Incorrect password.');
+        return;
     }
+
+    loginSection.classList.add('hidden');
+    dashboardSection.classList.remove('hidden');
+    if (isPlaceholder) loadDummyData();
+    else fetchData();
 });
 
-document.getElementById('logoutBtn')?.addEventListener('click', async () => {
-    if (!isPlaceholder) await supabase.auth.signOut();
-    window.location.reload();
+document.getElementById('logoutBtn')?.addEventListener('click', () => {
+    dashboardSection.classList.add('hidden');
+    loginSection.classList.remove('hidden');
+    document.getElementById('adminPassword').value = '';
 });
 
 document.getElementById('searchInput')?.addEventListener('input', (e) => {
