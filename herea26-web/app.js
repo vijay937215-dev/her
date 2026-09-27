@@ -1,7 +1,7 @@
 try {
 // Supabase configuration - these need to be replaced with real values
-const supabaseUrl = 'YOUR_SUPABASE_URL';
-const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
+const supabaseUrl = 'https://cnhprpdqrbpqilxtkurf.supabase.co';
+const supabaseKey = 'sb_publishable_URKmPy7y6OtNvIwXTHz6TQ_2s6PG0YA';
 
 // Initialize Supabase only if real keys are provided to prevent crash
 const isPlaceholder = supabaseUrl === 'YOUR_SUPABASE_URL';
