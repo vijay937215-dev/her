@@ -1,6 +1,6 @@
 try {
-const supabaseUrl = 'YOUR_SUPABASE_URL';
-const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
+const supabaseUrl = 'https://cnhprpdqrbpqilxtkurf.supabase.co';
+const supabaseKey = 'sb_publishable_URKmPy7y6OtNvIwXTHz6TQ_2s6PG0YA';
 const isPlaceholder = supabaseUrl === 'YOUR_SUPABASE_URL';
 const supabase = (window.supabase && !isPlaceholder) ? window.supabase.createClient(supabaseUrl, supabaseKey) : null;
 let allData = [];
