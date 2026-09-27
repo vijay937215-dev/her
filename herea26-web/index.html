@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HERÈA'26 | Two Experiences. One Extraordinary Event.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0f; color: white; overflow-x: hidden; scroll-behavior: smooth; }
+        
+        /* Advanced Intro Animation */
+        #intro { position: fixed; inset: 0; background: #0a0a0f; z-index: 100; display: flex; align-items: center; justify-content: center; flex-direction: column; overflow: hidden; animation: fadeOut 1s ease 5.5s forwards; }
+        
+        /* Shockwaves */
+        .shockwave { position: absolute; top: 50%; left: 50%; width: 0; height: 0; border: 2px solid rgba(109, 40, 217, 0.5); border-radius: 50%; transform: translate(-50%, -50%); animation: explode 2s ease-out forwards; opacity: 0; }
+        .sw-1 { animation-delay: 1.5s; border-color: rgba(212, 175, 55, 0.5); }
+        .sw-2 { animation-delay: 2s; }
+        .sw-3 { animation-delay: 2.5s; border-color: white; }
+
+        @keyframes explode { 0% { width: 0; height: 0; opacity: 1; border-width: 10px; } 100% { width: 100vw; height: 100vw; opacity: 0; border-width: 0; } }
+
+        /* Intro particles & streaks */
+        .intro-streak { position: absolute; width: 200%; height: 2px; background: linear-gradient(90deg, transparent, #D4AF37, #6D28D9, transparent); opacity: 0; transform: rotate(-45deg) translateY(-100vh); animation: streakSlide 2s ease-in-out forwards; }
+        .streak-1 { top: 20%; animation-delay: 0.2s; }
+        .streak-2 { top: 50%; animation-delay: 0.5s; width: 300%; background: linear-gradient(90deg, transparent, #6D28D9, #D4AF37, transparent); }
+        .streak-3 { top: 80%; animation-delay: 0.8s; }
+
+        #intro-text { font-size: 5rem; font-weight: 900; background: linear-gradient(to right, #6D28D9, #D4AF37, #6D28D9); background-size: 200% auto; -webkit-background-clip: text; color: transparent; opacity: 0; animation: scaleUpText 2s cubic-bezier(0.2, 0.8, 0.2, 1) 1.5s forwards, shine 3s linear infinite, glitch 0.3s cubic-bezier(.25, .46, .45, .94) both 3s 5; filter: drop-shadow(0 0 20px rgba(109,40,217,0.5)); letter-spacing: 0.5rem; position: relative; }
+        #intro-sub { font-size: 1.5rem; color: #aaa; opacity: 0; animation: slideUpFade 1s ease 2.5s forwards; margin-top: 1rem; letter-spacing: 0.2rem; }
+        
+        @keyframes streakSlide { 0% { transform: rotate(-45deg) translateY(-100vh) translateX(-50vw); opacity: 0; } 50% { opacity: 1; } 100% { transform: rotate(-45deg) translateY(100vh) translateX(50vw); opacity: 0; } }
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+        @keyframes scaleUpText { 0% { opacity: 0; transform: scale(0.5) translateY(50px); filter: blur(10px); } 100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); } }
+        @keyframes slideUpFade { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes shine { to { background-position: 200% center; } }
+        @keyframes glitch { 0% { transform: translate(0) } 20% { transform: translate(-5px, 5px) } 40% { transform: translate(-5px, -5px) } 60% { transform: translate(5px, 5px) } 80% { transform: translate(5px, -5px) } 100% { transform: translate(0) } }
+
+        /* Floating Background Elements */
+        .floating-orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; animation: float 10s ease-in-out infinite alternate; pointer-events: none; z-index: -1; }
+        .orb-1 { width: 400px; height: 400px; background: #6D28D9; top: -100px; left: -100px; animation-duration: 12s; }
+        .orb-2 { width: 500px; height: 500px; background: #2D1B69; bottom: -200px; right: -100px; animation-duration: 15s; animation-delay: -5s; }
+        .orb-3 { width: 300px; height: 300px; background: #D4AF37; top: 40%; left: 60%; opacity: 0.2; animation-duration: 18s; animation-delay: -2s; }
+
+        @keyframes float { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(50px, 30px) scale(1.1); } 100% { transform: translate(-30px, 50px) scale(0.9); } }
+
+        /* Floating Geometric Shapes */
+        .shape { position: absolute; border: 2px solid rgba(255,255,255,0.1); pointer-events: none; animation: spinFloat 20s linear infinite; z-index: -1; }
+        .shape-square { width: 100px; height: 100px; top: 20%; left: 10%; border-color: rgba(212, 175, 55, 0.3); }
+        .shape-circle { width: 150px; height: 150px; border-radius: 50%; bottom: 30%; right: 5%; border-color: rgba(109, 40, 217, 0.3); animation-direction: reverse; animation-duration: 25s; }
+        .shape-triangle { width: 0; height: 0; border-left: 60px solid transparent; border-right: 60px solid transparent; border-bottom: 100px solid rgba(255,255,255,0.05); border-top: none; border-style: none solid solid none; top: 60%; left: 15%; animation-duration: 15s; }
+
+        @keyframes spinFloat { 0% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-100px) rotate(180deg); } 100% { transform: translateY(0) rotate(360deg); } }
+
+        /* Floating image backgrounds */
+        .animation-float-slow { animation: floatSlow 20s ease-in-out infinite alternate; }
+        .animation-float-reverse { animation: floatSlow 25s ease-in-out infinite alternate-reverse; }
+        @keyframes floatSlow { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(100px) rotate(20deg); } }
+
+        /* Glowing Effects & Glassmorphism */
+        .glass-card {
+            background: rgba(10, 10, 15, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+            opacity: 0; transition: opacity 0.5s ease; pointer-events: none;
+            transform: translate(-50%, -50%);
+        }
+        .glass-card:hover::before { opacity: 1; animation: followMouse 3s linear infinite; }
+        
+        .glow-purple { box-shadow: 0 0 40px rgba(109, 40, 217, 0.6); }
+        .glow-gold { box-shadow: 0 0 40px rgba(212, 175, 55, 0.5); }
+        
+        .hover-3d { transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .hover-3d:hover { transform: translateY(-15px) scale(1.05) rotateX(5deg) rotateY(5deg); z-index: 10; }
+
+        /* Scroll Reveal Animation Classes */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 1s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Particles bg */
+        .particles-bg { position: fixed; inset: 0; z-index: -3; background-color: #0a0a0f; background-image: url('chips-bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; opacity: 0.4; }
+        .mini-particle { position: absolute; background: white; border-radius: 50%; opacity: 0.5; pointer-events: none; animation: rise 15s linear infinite; }
+        @keyframes rise { 0% { transform: translateY(100vh) scale(0); opacity: 0; } 10% { opacity: 0.8; box-shadow: 0 0 10px white; } 90% { opacity: 0.8; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
+
+        /* Custom image backgrounds for cards */
+        .card-bg-betquest { background: linear-gradient(rgba(10,10,15,0.8), rgba(10,10,15,0.9)), url('betquest-bg.jpg'); background-size: cover; background-position: center; }
+        .card-bg-herhorizon { background: linear-gradient(rgba(10,10,15,0.8), rgba(10,10,15,0.9)), url('herhorizon-bg.jpg'); background-size: cover; background-position: center; }
+
+        /* Moving Gradient Text */
+        .gradient-text-animate { background: linear-gradient(90deg, #D4AF37, #6D28D9, #D4AF37); background-size: 200% auto; color: transparent; -webkit-background-clip: text; animation: shine 3s linear infinite; }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0a0a0f',
+                        purple: '#2D1B69',
+                        violet: '#6D28D9',
+                        gold: '#D4AF37'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased">
+
+    <!-- Intro Animation -->
+    <div id="intro">
+        <div class="shockwave sw-1"></div>
+        <div class="shockwave sw-2"></div>
+        <div class="shockwave sw-3"></div>
+        <div class="intro-streak streak-1"></div>
+        <div class="intro-streak streak-2"></div>
+        <div class="intro-streak streak-3"></div>
+        <div id="intro-text">HERÈA'26</div>
+        <div id="intro-sub">BETQUEST + HER HORIZON</div>
+    </div>
+
+    <!-- Split Background Elements -->
+    <div class="fixed inset-y-0 left-0 w-1/2 z-[-3] bg-[url('herhorizon-bg.jpg')] bg-cover bg-left opacity-30"></div>
+    <div class="fixed inset-y-0 right-0 w-1/2 z-[-3] bg-[url('chips-bg.jpg')] bg-cover bg-right opacity-30"></div>
+    <div class="fixed inset-0 z-[-2] bg-gradient-to-b from-[#0a0a0f]/50 via-transparent to-[#0a0a0f] pointer-events-none"></div>
+
+    <div class="floating-orb orb-1"></div>
+    <div class="floating-orb orb-2"></div>
+    <div class="floating-orb orb-3"></div>
+    <div class="shape shape-square"></div>
+    <div class="shape shape-circle"></div>
+    <div class="shape shape-triangle"></div>
+    <div id="particles-container"></div>
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass-card px-6 py-4 flex justify-between items-center border-b border-white/10" style="backdrop-filter: blur(20px);">
+        <h1 class="text-2xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-violet to-gold">HERÈA'26</h1>
+        <div class="flex gap-4">
+            <a href="#events" class="hover:text-gold transition-colors font-medium hidden sm:block">Events</a>
+            <a href="#register" class="bg-violet hover:bg-purple-700 px-5 py-2 rounded-full font-bold transition-all shadow-[0_0_15px_rgba(109,40,217,0.5)]">Register</a>
+            <a href="admin.html" class="border border-white/20 hover:bg-white/10 px-5 py-2 rounded-full font-medium transition-colors hidden sm:block">Admin</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="min-h-screen flex flex-col items-center justify-center text-center px-4 relative pt-20 reveal">
+        <h2 class="text-6xl md:text-8xl font-black mb-6 tracking-tighter drop-shadow-2xl hover:scale-105 transition-transform duration-700 gradient-text-animate">
+            HERÈA'<span class="text-white">26</span>
+        </h2>
+        <p class="text-xl md:text-3xl text-gray-200 mb-12 italic font-light tracking-wide drop-shadow-lg">
+            "Two Experiences. One Extraordinary Event."
+        </p>
+        <div class="flex flex-col sm:flex-row gap-6">
+            <a href="#register" class="px-8 py-4 bg-gradient-to-r from-violet to-purple-800 rounded-full text-lg font-bold hover:scale-110 transition-all glow-purple relative overflow-hidden group">
+                <span class="relative z-10">REGISTER NOW</span>
+                <div class="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-500"></div>
+            </a>
+            <a href="#events" class="px-8 py-4 glass-card rounded-full text-lg font-bold hover:bg-white/10 transition-all hover:scale-105">
+                EXPLORE EVENTS
+            </a>
+        </div>
+    </header>
+
+    <!-- Events Section -->
+    <section id="events" class="py-24 px-6 max-w-7xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-black text-center mb-16 reveal">THE <span class="text-gold">EVENTS</span></h2>
+        
+        <div class="grid md:grid-cols-2 gap-12">
+            <!-- Betquest -->
+            <div class="glass-card card-bg-betquest p-8 rounded-3xl hover-3d glow-gold relative overflow-hidden border-gold/50 reveal delay-100">
+                <div class="absolute top-0 right-0 p-4 opacity-20 text-6xl transform rotate-12 transition-transform duration-700 group-hover:rotate-45">🎰</div>
+                <h3 class="text-3xl font-black text-gold mb-2 drop-shadow-md">BETQUEST</h3>
+                <p class="text-xl text-gray-200 mb-6 italic drop-shadow-md">Where Knowledge Meets the Art of the Bet.</p>
+                <div class="space-y-4 text-gray-300 leading-relaxed font-medium">
+                    <p><strong>Team Size:</strong> 3 Members (Total 20 Teams)</p>
+                    <p><strong>Round 01: Bid to Answer</strong><br>Start with ₹10,000 Virtual Cash. 7 Questions. Bid smart, answer right (+10 points). 6 teams survive.</p>
+                    <p><strong>Round 02: Cash Out</strong><br>6 Questions with different values. 15 minutes. Earn full amount for correct answers. Top 3 teams win!</p>
+                </div>
+            </div>
+
+            <!-- Her Horizon -->
+            <div class="glass-card card-bg-herhorizon p-8 rounded-3xl hover-3d glow-purple relative overflow-hidden border-violet/50 reveal delay-200">
+                <div class="absolute top-0 right-0 p-4 opacity-20 text-6xl transform -rotate-12 transition-transform duration-700 group-hover:rotate-0">✨</div>
+                <h3 class="text-3xl font-black text-violet mb-2 drop-shadow-md">HER HORIZON</h3>
+                <p class="text-xl text-gray-200 mb-6 italic drop-shadow-md">Celebrate Her. Express Her. Inspire Through Her.</p>
+                <div class="space-y-4 text-gray-300 leading-relaxed font-medium">
+                    <p><strong>Overview:</strong> A women-centric creative & interactive challenge. 60 Minutes.</p>
+                    <p><strong>Rounds:</strong><br>
+                    1. <em>Emoji Her (15m):</em> Guess women in professions using emojis.<br>
+                    2. <em>Doodle Her (15m):</em> Quick creativity using prompts.<br>
+                    3. <em>Her Playlist (15m):</em> Connect situations to songs.<br>
+                    4. <em>Final Challenge (5m):</em> One common prompt for finalists.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Section -->
+    <section id="register" class="py-24 px-6 relative reveal border-t border-white/10">
+        <!-- New Full Background Image for Registration -->
+        <div class="absolute inset-0 bg-[url('chips-bg.jpg')] bg-cover bg-center opacity-30 z-0"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0f] via-transparent to-[#0a0a0f] z-0"></div>
+
+        <div class="max-w-5xl mx-auto glass-card p-8 md:p-12 rounded-3xl shadow-2xl relative overflow-hidden glow-purple z-10 border-white/20">
+            <h2 class="text-4xl font-black text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-violet to-white drop-shadow-md">SECURE YOUR SPOT</h2>
+            
+            <form id="regForm" class="space-y-6 relative z-10">
+                <!-- Team Member Details -->
+                <div class="bg-white/5 p-6 rounded-2xl border border-white/10 space-y-4">
+                    <h3 class="text-xl font-bold text-gold mb-4 border-b border-white/10 pb-2">Team Details (2 Members Per Team)</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Team Leader Name (Person 1)</label>
+                            <input type="text" id="fullName" required class="w-full bg-black/50 border border-white/20 rounded-xl p-4 text-white focus:outline-none focus:border-violet focus:ring-1 focus:ring-violet transition-all shadow-inner">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Teammate Name (Person 2)</label>
+                            <input type="text" id="teammateName" required class="w-full bg-black/50 border border-white/20 rounded-xl p-4 text-white focus:outline-none focus:border-violet focus:ring-1 focus:ring-violet transition-all shadow-inner">
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">College Name</label>
+                            <input type="text" id="collegeName" required class="w-full bg-black/50 border border-white/20 rounded-xl p-4 text-white focus:outline-none focus:border-violet focus:ring-1 focus:ring-violet transition-all shadow-inner">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Department</label>
+                            <input type="text" id="department" required class="w-full bg-black/50 border border-white/20 rounded-xl p-4 text-white focus:outline-none focus:border-violet focus:ring-1 focus:ring-violet transition-all shadow-inner">
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Email Address (Leader)</label>
+                            <input type="email" id="email" required class="w-full bg-black/50 border border-white/20 rounded-xl p-4 text-white focus:outline-none focus:border-violet focus:ring-1 focus:ring-violet transition-all shadow-inner">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">WhatsApp Number (Leader)</label>
+                            <input type="tel" id="whatsapp" required class="w-full bg-black/50 border border-white/20 rounded-xl p-4 text-white focus:outline-none focus:border-violet focus:ring-1 focus:ring-violet transition-all shadow-inner">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2 font-bold ml-2">Select Event Registration</label>
+                    <select id="selectedEvent" required class="w-full bg-black/80 border border-white/20 rounded-xl p-4 text-white focus:outline-none focus:border-violet appearance-none shadow-lg cursor-pointer hover:border-white/40 transition-colors">
+                        <option value="BETQUEST">BETQUEST (Team Event)</option>
+                        <option value="HER HORIZON">HER HORIZON (Team Event)</option>
+                        <option value="BOTH" selected>BOTH EVENTS (Team Event)</option>
+                    </select>
+                </div>
+
+                <!-- Payment Info -->
+                <div class="mt-8 p-6 bg-violet/10 border border-violet/30 rounded-2xl text-center shadow-lg relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-violet/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <h3 class="text-2xl font-black mb-2 text-white relative z-10">Registration Fee: <span class="text-gold">₹100</span></h3>
+                    <p class="text-sm text-gray-300 mb-6 relative z-10">Please scan the QR code to make your payment.</p>
+                    
+                    <div class="w-48 h-48 mx-auto bg-white rounded-xl flex items-center justify-center mb-6 p-2 relative z-10 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                        <!-- Placeholder for UPI QR Code -->
+                        <div class="text-black text-center text-xs font-bold border-2 border-dashed border-gray-400 w-full h-full flex items-center justify-center hover:bg-gray-100 transition-colors">
+                            UPI QR CODE<br>Placeholder
+                        </div>
+                    </div>
+                    
+                    <div class="text-left relative z-10">
+                        <label class="block text-sm text-gray-300 mb-2 font-bold">Upload Payment Screenshot (JPG/PNG)</label>
+                        <input type="file" id="paymentScreenshot" accept="image/jpeg, image/png, image/jpg" required class="w-full text-sm text-gray-400 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-violet file:text-white hover:file:bg-purple-500 transition-colors cursor-pointer file:shadow-md border border-white/10 rounded-full p-1 bg-black/30">
+                    </div>
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full py-5 bg-gradient-to-r from-violet to-purple-600 rounded-xl font-black text-xl hover:scale-[1.02] transition-transform shadow-[0_0_30px_rgba(109,40,217,0.5)] tracking-wide border border-white/20 hover:border-white/50">
+                    SUBMIT TEAM REGISTRATION
+                </button>
+            </form>
+
+            <!-- Success Message (Hidden initially) -->
+            <div id="successMessage" class="hidden absolute inset-0 bg-[#0a0a0f]/95 backdrop-blur-xl z-20 flex flex-col items-center justify-center p-8 text-center rounded-3xl">
+                <div class="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mb-6 shadow-[0_0_40px_rgba(34,197,94,0.6)] transform scale-0 animate-[scaleUpText_0.5s_ease_forwards]">
+                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-black text-white mb-2 tracking-tight">TEAM REGISTERED!</h2>
+                <p class="text-gray-400 mb-8 text-lg">Welcome to HERÈA'26.</p>
+                
+                <div class="w-full max-w-md glass-card p-6 rounded-2xl text-left space-y-4 mb-8 border border-white/20 shadow-2xl">
+                    <p class="text-gray-300 text-sm flex justify-between border-b border-white/10 pb-2"><span>Registration ID:</span> <span id="s-regId" class="font-mono text-gold font-bold text-base"></span></p>
+                    <p class="text-gray-300 text-sm flex justify-between border-b border-white/10 pb-2"><span>Selected Event:</span> <span id="s-event" class="text-white font-bold text-base"></span></p>
+                    <p class="text-gray-300 text-sm flex justify-between"><span>Payment Status:</span> <span class="text-yellow-400 font-bold text-base">Pending Verification</span></p>
+                </div>
+
+                <a href="https://chat.whatsapp.com/LcetKkNq5U36Sm5i0RyeEE" target="_blank" class="w-full max-w-md py-4 bg-[#25D366] hover:bg-[#128C7E] rounded-xl font-black text-white transition-all hover:scale-105 shadow-[0_0_20px_rgba(37,211,102,0.4)] flex justify-center items-center gap-3">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564c.173.087.289.129.332.202.043.073.043.423-.101.827z"/></svg>
+                    JOIN OFFICIAL WHATSAPP GROUP
+                </a>
+                <button onclick="window.location.reload()" class="mt-6 text-sm text-gray-500 hover:text-white underline font-medium">Submit another team response</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-white/10 py-8 text-center text-gray-500 text-sm">
+        <p>&copy; 2026 HERÈA. All rights reserved.</p>
+    </footer>
+
+    <!-- App Logic -->
+    <script src="app.js"></script>
+    <script>
+        // Reveal animations on scroll
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        window.addEventListener('scroll', reveal);
+        reveal(); // Trigger on load
+
+        // Generate mini particles
+        const container = document.getElementById('particles-container');
+        for (let i = 0; i < 50; i++) {
+            let p = document.createElement('div');
+            p.className = 'mini-particle';
+            p.style.width = Math.random() * 4 + 1 + 'px';
+            p.style.height = p.style.width;
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDelay = Math.random() * 15 + 's';
+            p.style.animationDuration = Math.random() * 10 + 10 + 's';
+            container.appendChild(p);
+        }
+    </script>
+</body>
+</html>

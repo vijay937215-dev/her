@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | HERÈA'26</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0f; color: white; }
+    </style>
+</head>
+<body class="p-8">
+    
+    <div id="loginSection" class="max-w-md mx-auto mt-20 p-8 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-md hidden">
+        <h2 class="text-3xl font-bold mb-6 text-center text-purple-400">Admin Login</h2>
+        <form id="loginForm" class="space-y-4">
+            <input type="email" id="adminEmail" placeholder="Admin Email" required class="w-full bg-black/50 border border-white/20 rounded-lg p-3 text-white">
+            <input type="password" id="adminPassword" placeholder="Password" required class="w-full bg-black/50 border border-white/20 rounded-lg p-3 text-white">
+            <button type="submit" class="w-full py-3 bg-purple-600 rounded-lg font-bold hover:bg-purple-700">Login</button>
+        </form>
+    </div>
+
+    <div id="dashboardSection" class="max-w-7xl mx-auto hidden">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold">Admin Dashboard <span class="text-yellow-500 text-sm font-normal ml-4">HERÈA'26</span></h1>
+            <div class="flex gap-4">
+                <a href="index.html" class="px-4 py-2 border border-white/20 rounded-lg hover:bg-white/10 text-sm">Back to Site</a>
+                <button id="logoutBtn" class="px-4 py-2 bg-red-600/80 rounded-lg hover:bg-red-600 text-sm font-bold">Logout</button>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                <p class="text-sm text-gray-400">Total Registrations</p>
+                <h3 class="text-3xl font-bold mt-2" id="stat-total">0</h3>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                <p class="text-sm text-gray-400">BETQUEST</p>
+                <h3 class="text-3xl font-bold mt-2 text-yellow-500" id="stat-bq">0</h3>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                <p class="text-sm text-gray-400">HER HORIZON</p>
+                <h3 class="text-3xl font-bold mt-2 text-purple-400" id="stat-hh">0</h3>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                <p class="text-sm text-gray-400">Pending Payments</p>
+                <h3 class="text-3xl font-bold mt-2 text-orange-400" id="stat-pending">0</h3>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="flex justify-between items-center mb-4">
+            <input type="text" id="searchInput" placeholder="Search by Name, ID or College..." class="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 w-64 text-sm focus:outline-none focus:border-purple-500">
+            <div class="flex gap-2">
+                <button class="px-4 py-2 bg-gray-800 rounded-lg text-sm border border-gray-700 hover:bg-gray-700">Export CSV</button>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700">
+            <table class="w-full text-left text-sm">
+                <thead class="bg-gray-700 text-gray-300">
+                    <tr>
+                        <th class="p-4">Reg ID</th>
+                        <th class="p-4">Participant</th>
+                        <th class="p-4">Contact</th>
+                        <th class="p-4">Event</th>
+                        <th class="p-4">Status</th>
+                        <th class="p-4 text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="registrationsTableBody">
+                    <!-- Rows injected by JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
