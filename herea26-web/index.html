@@ -116,7 +116,8 @@
                 max-width: calc(100% - 2rem);
             }
             #intro-logos img:first-child { height: 2.25rem; }
-            #intro-logos img:last-child { height: 2.5rem; max-width: 6rem; }
+            #intro-logos img:nth-child(2) { height: 2.5rem; max-width: 6rem; }
+            #intro-logos img:last-child { height: 2.25rem; max-width: 2.5rem; object-fit: contain; }
             #intro-text {
                 box-sizing: border-box;
                 display: block;
@@ -142,8 +143,9 @@
             }
             @media (max-width: 360px) {
                 #intro-text { font-size: 10vw; letter-spacing: 0.04em; }
-                #intro-logos img:first-child { height: 2rem; }
-                #intro-logos img:last-child { height: 2.25rem; max-width: 5.5rem; }
+                            #intro-logos img:first-child { height: 2rem; }
+            #intro-logos img:nth-child(2) { height: 2.25rem; max-width: 5.5rem; }
+            #intro-logos img:last-child { height: 2rem; max-width: 2.25rem; }
             }
             .intro-streak { height: 1px; }
             .shockwave { animation-duration: 1.5s; }
@@ -210,6 +212,7 @@
         <div id="intro-logos" class="absolute top-5 left-5 z-10 flex items-center gap-3 sm:top-7 sm:left-7">
             <img src="https://i.ibb.co/mF8sMNgZ/IEEE-logo-svg.webp" alt="IEEE" class="h-10 w-auto sm:h-14">
             <img src="https://i.ibb.co/KQhGVr5/clg-logo-yellow.png" alt="Engineering College" class="h-12 w-auto max-w-[120px] object-contain sm:h-16 sm:max-w-[170px]">
+            <img src="WhatsApp%20Image%202026-09-28%20at%205.51.23%20PM.jpeg" alt="IEEE Women in Engineering logo" class="h-10 w-auto max-w-[3.25rem] object-contain sm:h-14 sm:max-w-[4.5rem]">
         </div>
         <div class="shockwave sw-1"></div>
         <div class="shockwave sw-2"></div>
@@ -239,6 +242,7 @@
         <div class="flex items-center gap-3 sm:gap-5">
             <img src="https://i.ibb.co/mF8sMNgZ/IEEE-logo-svg.webp"  alt="IEEE" class="h-7 w-auto sm:h-12">
             <img src="https://i.ibb.co/KQhGVr5/clg-logo-yellow.png" alt="Engineering College" class="h-8 w-auto max-w-[70px] object-contain sm:h-14 sm:max-w-[150px]">
+            <img src="WhatsApp%20Image%202026-09-28%20at%205.51.23%20PM.jpeg" alt="IEEE Women in Engineering logo" class="h-7 w-auto max-w-[2rem] object-contain sm:h-12 sm:max-w-[3.25rem]">
             <h1 class="text-sm sm:text-2xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-violet to-gold">HERÈA'26</h1>
         </div>
         <div class="flex gap-2 sm:gap-4">
