@@ -56,6 +56,8 @@ const supabase = (window.supabase && !isPlaceholder) ? window.supabase.createCli
                     const { error: insertError } = await supabase.from('registrations').insert([{
                         registration_id: regId,
                         full_name: fullName + (teammateName ? ' & ' + teammateName : ''),
+                        team_leader_name: fullName,
+                        teammate_name: teammateName,
                         college_name: collegeName,
                         department: department,
                         email: email,
