@@ -99,8 +99,12 @@
         .gradient-text-animate { background: linear-gradient(90deg, #D4AF37, #6D28D9, #D4AF37); background-size: 200% auto; color: transparent; -webkit-background-clip: text; animation: shine 3s linear infinite; }
 
         @media (max-width: 640px) {
+            #intro {
+                padding: env(safe-area-inset-top) 1rem env(safe-area-inset-bottom);
+                animation: fadeOut 0.7s ease 3.8s forwards;
+            }
             #intro-logos {
-                top: 1rem;
+                top: max(1rem, env(safe-area-inset-top));
                 left: 50%;
                 gap: 0.75rem;
                 transform: translateX(-50%);
@@ -109,8 +113,27 @@
             }
             #intro-logos img:first-child { height: 2.5rem; }
             #intro-logos img:last-child { height: 2.75rem; max-width: 7rem; }
-            #intro-text { max-width: 100%; padding: 0 0.5rem; font-size: clamp(2.5rem, 13vw, 4rem); letter-spacing: 0.15rem; text-align: center; }
-            #intro-sub { padding: 0 1rem; font-size: clamp(0.8rem, 4vw, 1.15rem); letter-spacing: 0.08rem; text-align: center; }
+            #intro-text {
+                width: 100%;
+                max-width: 100%;
+                padding: 0 0.25rem;
+                font-size: clamp(2rem, 12vw, 3.5rem);
+                line-height: 1;
+                letter-spacing: 0.08em;
+                text-align: center;
+                white-space: nowrap;
+                animation: scaleUpText 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.25s forwards, shine 3s linear infinite;
+            }
+            #intro-sub {
+                max-width: 100%;
+                padding: 0 0.5rem;
+                font-size: clamp(0.72rem, 3.5vw, 1rem);
+                letter-spacing: 0.06em;
+                text-align: center;
+                animation: slideUpFade 0.8s ease 0.8s forwards;
+            }
+            .intro-streak { height: 1px; }
+            .shockwave { animation-duration: 1.5s; }
             #background-horizon,
             #background-betquest {
                 inset-inline: 0;
