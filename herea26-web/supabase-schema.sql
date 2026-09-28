@@ -33,6 +33,15 @@ CREATE POLICY "Allow authenticated update" ON registrations
   FOR UPDATE 
   USING (auth.role() = 'authenticated');
 
--- NOTE: 
--- Don't forget to create a Storage Bucket named 'payments'
--- and set it to PUBLIC so users can upload their UPI screenshots.
+-- 6. Allow unauthenticated visitors using the anon key to upload payment screenshots
+-- to the payments bucket. A PUBLIC bucket only enables public reads; it does not
+-- grant permission to upload files.
+CREATE POLICY "Allow public payment uploads" ON storage.objects
+  FOR INSERT
+  TO anon
+  WITH CHECK (bucket_id = 'payments');
+
+-- NOTE:
+-- Create a Storage Bucket named 'payments' and set it to PUBLIC if the admin
+-- dashboard should open screenshot URLs without signing in. The policy above
+-- grants uploads only to this bucket.
