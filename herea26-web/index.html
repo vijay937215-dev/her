@@ -97,6 +97,39 @@
 
         /* Moving Gradient Text */
         .gradient-text-animate { background: linear-gradient(90deg, #D4AF37, #6D28D9, #D4AF37); background-size: 200% auto; color: transparent; -webkit-background-clip: text; animation: shine 3s linear infinite; }
+
+        @media (max-width: 640px) {
+            #intro-text { max-width: 100%; font-size: clamp(2.5rem, 13vw, 4rem); letter-spacing: 0.15rem; text-align: center; }
+            #intro-sub { padding: 0 1rem; font-size: clamp(0.8rem, 4vw, 1.15rem); letter-spacing: 0.08rem; text-align: center; }
+            nav { padding: 0.75rem 1rem !important; gap: 0.5rem; }
+            nav > div:first-child { min-width: 0; gap: 0.5rem; }
+            nav > div:first-child img:nth-child(2) { display: none; }
+            nav h1 { white-space: nowrap; font-size: 0.78rem; letter-spacing: 0.08rem; }
+            nav > div:last-child a { padding: 0.55rem 0.85rem; font-size: 0.8rem; white-space: nowrap; }
+            header h2 { font-size: clamp(3rem, 16vw, 5rem); line-height: 1.05; }
+            header p { max-width: 22rem; font-size: 1.05rem; }
+            #events { padding: 4rem 1rem; }
+            #events > h2 { margin-bottom: 2rem; font-size: 2.25rem; }
+            #events .grid { gap: 1.25rem; }
+            #events .glass-card { padding: 1.5rem; }
+            #events .glass-card h3 { font-size: 1.65rem; }
+            #events .glass-card p { overflow-wrap: anywhere; }
+            #register { padding: 4rem 1rem; }
+            #register > div.max-w-5xl { padding: 1.25rem; }
+            #register h2 { font-size: 1.8rem; line-height: 1.2; }
+            #register form > div:first-child { padding: 1rem; }
+            #register form > div:first-child h3 { font-size: 1rem; }
+            #register input, #register select { min-width: 0; font-size: 16px; }
+            #paymentScreenshot { border-radius: 0.75rem; }
+            #submitBtn { padding: 1rem; font-size: 1rem; }
+            #register.reveal.active { transform: none; }
+            #successMessage { position: fixed; inset: 0; z-index: 60; overflow-y: auto; justify-content: flex-start; padding: 1.5rem 1rem; border-radius: 0; }
+            #successMessage > div:first-child { width: 4rem; height: 4rem; margin-top: 1rem; }
+            #successMessage h2 { font-size: 2rem; }
+            #successMessage .glass-card { padding: 1rem; }
+            #successMessage .glass-card p { gap: 0.75rem; text-align: left; }
+            #successMessage .glass-card p span:last-child { overflow-wrap: anywhere; text-align: right; }
+        }
     </style>
     <script>
         tailwind.config = {
